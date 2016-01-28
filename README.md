@@ -79,7 +79,6 @@ Optional REDCap Code Changes*
    to
       257  include APP_PATH_DOCROOT.'../plugins/longitudinal_reports/data_export_page_message.php'; // Tabs
 
-
 2. Enable Longitudinal Reports to be exported using the REDCap API
 
    redcap_v6.11.1/API/report/export.php line 28
@@ -89,25 +88,28 @@ Optional REDCap Code Changes*
    presence of this parameter and redirects the processing to the Longitudinal
    Reports plugin:
 
-   Change
-      28  // Export the data for this report
-      29  $content = DataExport::doReport($post['report_id'], 'export', $format, ($post['rawOrLabel'] == 'label'), ($post['rawOrLabelHeaders'] == 'label'), 
-      30          false, false, $removeIdentifierFields, $hashRecordID, $removeUnvalidatedTextFields, 
-      31          $removeNotesFields, $removeDateFields, false, false, array(), array(), false, $post['exportCheckboxLabel']);
-
-   to
-      28  if (isset($post['longitudinal_reports']) && (bool)$post['longitudinal_reports']) {
-      29      require_once('../../plugins/longitudinal_reports/config.php');
-      30      $content = LongitudinalReports::doReport($post['report_id'], 'export', $format, ($post['rawOrLabel'] == 'label'), ($post['rawOrLabelHeaders'] == 'label'), 
-      31              false, false, $removeIdentifierFields, $hashRecordID, $removeUnvalidatedTextFields, 
-      32              $removeNotesFields, $removeDateFields, false, false, array(), array(), false, $post['exportCheckboxLabel']);
-      33  } else {
-      34  // Export the data for this report
-      35  $content = DataExport::doReport($post['report_id'], 'export', $format, ($post['rawOrLabel'] == 'label'), ($post['rawOrLabelHeaders'] == 'label'), 
-      36          false, false, $removeIdentifierFields, $hashRecordID, $removeUnvalidatedTextFields, 
-      37          $removeNotesFields, $removeDateFields, false, false, array(), array(), false, $post['exportCheckboxLabel']);
-      38  }
-
-* Note that changes to the main REDCap code must be re-made with each version 
-  upgrade. Note also that line numbers may vary between versions.
+   Surround this code block at lines 28 - 31:
+ 
+		// Export the data for this report
+		$content = DataExport::doReport($post['report_id'], 'export', $format, ($post['rawOrLabel'] == 'label'), ($post['rawOrLabelHeaders'] == 'label'), 
+			false, false, $removeIdentifierFields, $hashRecordID, $removeUnvalidatedTextFields, 
+			$removeNotesFields, $removeDateFields, false, false, array(), array(), false, $post['exportCheckboxLabel']);
+   
+   with an if statement to catch the presence of the longitudinal_reports POST 
+   parameter and redirect flow to the longitudinal_reports code:
+   
+		if (isset($post['longitudinal_reports']) && (bool)$post['longitudinal_reports']) {
+				require_once('../../plugins/longitudinal_reports/config.php');
+				$content = LongitudinalReports::doReport($post['report_id'], 'export', $format, ($post['rawOrLabel'] == 'label'), ($post['rawOrLabelHeaders'] == 'label'), 
+					false, false, $removeIdentifierFields, $hashRecordID, $removeUnvalidatedTextFields, 
+					$removeNotesFields, $removeDateFields, false, false, array(), array(), false, $post['exportCheckboxLabel']);
+		} else {
+				// Export the data for this report
+				$content = DataExport::doReport($post['report_id'], 'export', $format, ($post['rawOrLabel'] == 'label'), ($post['rawOrLabelHeaders'] == 'label'), 
+					false, false, $removeIdentifierFields, $hashRecordID, $removeUnvalidatedTextFields, 
+					$removeNotesFields, $removeDateFields, false, false, array(), array(), false, $post['exportCheckboxLabel']);
+		}
+ 
+ * Note that changes to the main REDCap code must be re-made with each version
+ upgrade. Note also that line numbers may vary between versions.
 ********************************************************************************
