@@ -1,12 +1,12 @@
 ********************************************************************************
-Longitudinal Reports REDCap Plugin
+#Longitudinal Reports REDCap Plugin
 
 Luke Stevens, Murdoch Childrens Research Institute https://www.mcri.edu.au
 ********************************************************************************
 
 
 ********************************************************************************
-Functionality
+##Functionality
 
 The "Longitudinal Reports" plugin lets you see row-per-participant data for 
 longitudinal REDCap projects, rather than the row-per-event-per-participant
@@ -18,7 +18,16 @@ in this repo (Conference_Presentation.pdf) and available via the REDCap wiki
 conference page https://iwg.devguard.com/trac/redcap/wiki/REDCap
 
 ********************************************************************************
-Demonstration
+##Licence
+
+Released under standard GPL license: no warranty provided; you are responsible 
+for ensuring this code or any modifications to it meet your requirements. 
+
+Please also leave attribution to this repository in the code and push back 
+updates and enhancements.
+
+********************************************************************************
+##Demonstration
 
 You can view the plugin in action on MCRI's server and have a go at creating/
 editing/viewing reports. 
@@ -28,7 +37,7 @@ editing/viewing reports.
 Look for the "Longitudinal Reports" bookmark.
 
 ********************************************************************************
-REDCap Version Requirements
+##REDCap Version Requirements
 
 The plugin is designed to work with REDCap v6.9.0 and later. 
  - 6.9.0+        All good
@@ -38,7 +47,7 @@ The plugin is designed to work with REDCap v6.9.0 and later.
                  equivalent code that saves report data via the REDCap API
 
 ********************************************************************************
-Installation
+##Installation
 
 The plugin functions without requiring any changes to the main REDCap codebase, 
 although there are two optional changes described below: one to enable the 
@@ -67,7 +76,7 @@ link to the longitudinal reports page on the main REDCap Data Export page.
         * Link Type:  Simple Link
         * Append project ID: Yes
 
-Optional REDCap Code Changes*
+###Optional REDCap Code Changes*
 
 1. Add an information message about the plugin - and a link - on REDCap's main
    Data Export module page
