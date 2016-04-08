@@ -59,24 +59,24 @@ link to the longitudinal reports page on the main REDCap Data Export page.
 
 2. Create a new project that will be used to store all of the configuration
    information for longitudinal reports
-        i. Title: Longitudinal Reports Plugin Data Store (or similar)
-       ii. Upload the data dictionary included in this repo
-      iii. Note the project id (pid=? in the url)
+    - Title: Longitudinal Reports Plugin Data Store (or similar)
+    - Upload the data dictionary included in this repo
+    - Note the project id (pid=? in the url)
 
 3. Edit the settings in longitudinal_reports/config.php to suit your environment
    At minimum you will need to set appropriate values for:
-        * Project id of report data store project created in step 2
-        * Path to redcap_connect.php relative to longitudinal_reports/config.php
-        * Path to plugin directory relative to APP_PATH_WEBROOT (which is 
-          something like https://redcap.institution.edu/redcap_v6.11.1 )
+    - Project id of report data store project created in step 2
+    - Path to redcap_connect.php relative to longitudinal_reports/config.php
+    - Path to plugin directory relative to APP_PATH_WEBROOT (which is 
+      something like https://redcap.institution.edu/redcap_v6.11.1 )
 
 4. Create a project bookmark to the main plugin page:
-        * Link Label: Longitudinal Reports (or whatever you like)
-        * Link URL:   https://<your server>/plugins/longitudinal_reports/index.php
-        * Link Type:  Simple Link
-        * Append project ID: Yes
+    - Link Label: Longitudinal Reports (or whatever you like)
+    - Link URL:   https://[your server]/plugins/longitudinal_reports/index.php
+    - Link Type:  Simple Link
+    - Append project ID: Yes
 
-###Optional REDCap Code Changes*
+###Optional REDCap Code Changes^
 
 1. Add an information message about the plugin - and a link - on REDCap's main
    Data Export module page
@@ -97,14 +97,14 @@ link to the longitudinal reports page on the main REDCap Data Export page.
    presence of this parameter and redirects the processing to the Longitudinal
    Reports plugin:
 
-   Surround this code block at lines 28 - 31:
+   Find this code block around lines 28 - 31:
  
 		// Export the data for this report
 		$content = DataExport::doReport($post['report_id'], 'export', $format, ($post['rawOrLabel'] == 'label'), ($post['rawOrLabelHeaders'] == 'label'), 
 			false, false, $removeIdentifierFields, $hashRecordID, $removeUnvalidatedTextFields, 
 			$removeNotesFields, $removeDateFields, false, false, array(), array(), false, $post['exportCheckboxLabel']);
    
-   with an if statement to catch the presence of the longitudinal_reports POST 
+   Surround the existing block with an if statement that will catch the presence of a longitudinal_reports POST 
    parameter and redirect flow to the longitudinal_reports code:
    
 		if (isset($post['longitudinal_reports']) && (bool)$post['longitudinal_reports']) {
@@ -119,6 +119,7 @@ link to the longitudinal reports page on the main REDCap Data Export page.
 					$removeNotesFields, $removeDateFields, false, false, array(), array(), false, $post['exportCheckboxLabel']);
 		}
  
- * Note that changes to the main REDCap code must be re-made with each version
+ ^ Note that changes to the main REDCap code must be re-made with each version
  upgrade. Note also that line numbers may vary between versions.
+
 ********************************************************************************
