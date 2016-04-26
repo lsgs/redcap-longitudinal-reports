@@ -291,6 +291,25 @@ if (isset($_GET['addedit'])) {
 include APP_PATH_DOCROOT . 'ProjectGeneral/footer.php';
 
 
+// Classes for backward-compatibility with versions < 6.13.0
+if (version_compare($redcap_version, '6.13.0', '<')) {
+?>
+<style type='text/css'>
+.labelrc {
+	font-family: "Helvetica Neue",Helvetica,Arial,Helvetica,sans-serif;
+	font-size: 12px;
+        background: #F0F0F0 url(../images/label-bg.gif) repeat-x scroll 0 0;
+	padding: 2px; border: 1px solid #CCCCCC; font-weight: bold; padding-left: 5px; padding-right: 5px; 
+}
+.labelrc a:link, .labelrc a:visited, .labelrc a:active, .labelrc a:hover {
+	text-decoration: underline;
+	font-family: "Helvetica Neue",Helvetica,Arial,Helvetica,sans-serif;
+	font-size: 12px;
+}
+</style>
+<?php
+}
+
 function exitWithMessage($msg) {
     include APP_PATH_DOCROOT . 'ProjectGeneral/header.php';
     print RCView::div(array('style'=>'max-width:750px;margin-bottom:10px;'),

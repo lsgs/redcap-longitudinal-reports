@@ -112,7 +112,7 @@ class LongitudinalReports
 		foreach ($user_list as $user=>$attr) {
 			// Add user
 			$rows .= RCView::tr(array(),
-						RCView::td(array('class'=>'label', 'style'=>'width:250px;padding:5px 10px;color:#800000;font-size:13px;font-weight:normal;'),
+						RCView::td(array('class'=>'labelrc', 'style'=>'width:250px;padding:5px 10px;color:#800000;font-size:13px;font-weight:normal;'),
 							$attr['name']
 						) .
 						(!$hasRoles ? '' :
@@ -268,7 +268,7 @@ class LongitudinalReports
 		
 		## USER ACCESS
 		print   RCView::tr(array(),
-					RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
+					RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
 						'style'=>'padding:0;background:#fff;border-left:0;border-right:0;height:45px;'), 
 						RCView::div(array('style'=>'color:#444;position:relative;top:10px;background-color:#ddd;border:1px solid #ccc;border-bottom:1px solid #ddd;float:left;padding:5px 8px;'),
 							$lang['global_117']." 1"
@@ -276,7 +276,7 @@ class LongitudinalReports
 					)
 				);
 		print   RCView::tr(array(),
-					RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
+					RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
 						RCView::div(array('style'=>''),
 							RCView::img(array('src'=>'group_add.png', 'class'=>'imgfix')) .
 							$lang['extres_35'] /*. $lang['colon'] . " " .
@@ -286,7 +286,7 @@ class LongitudinalReports
 					)
 				);
 		print   RCView::tr(array(),
-					RCView::td(array('class'=>'label', 'colspan'=>4, 'style'=>'padding-top:6px;padding-bottom:6px;'),
+					RCView::td(array('class'=>'labelrc', 'colspan'=>4, 'style'=>'padding-top:6px;padding-bottom:6px;'),
 						// All users
 						RCView::div(array('style'=>'float:left;'),
 							RCView::radio(array('name'=>'user_access_radio', 'onchange'=>"displayUserAccessOptions()", 'class'=>'imgfix2', 'value'=>'ALL', $user_access_radio_all_checked=>$user_access_radio_all_checked))
@@ -357,7 +357,7 @@ class LongitudinalReports
 		
 		## FIELDS USED IN REPORT
 		print   RCView::tr(array(),
-					RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
+					RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
 						'style'=>'padding:0;background:#fff;border-left:0;border-right:0;height:45px;'), 
 						RCView::div(array('style'=>'color:#444;position:relative;top:10px;background-color:#ddd;border:1px solid #ccc;border-bottom:1px solid #ddd;float:left;padding:5px 8px;'),
 							$lang['global_117']." 2"
@@ -366,7 +366,7 @@ class LongitudinalReports
 				);
                 // "Fields" section header
                 print   RCView::tr(array(),
-                                  RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
+                                  RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
                                       RCView::div(array('style'=>'float:left;'),
                                           RCView::img(array('id'=>'dragndrop_tooltip_trigger', 'title'=>$lang['report_builder_67'], 'src'=>'tags.png', 'class'=>'imgfix')) .
                                           $lang['report_builder_29']
@@ -389,14 +389,14 @@ class LongitudinalReports
                         $fname = self::getFieldFromEventField($this_field);
 			print   RCView::tr(array('class'=>'field_row'),
 						// "Field X"
-						RCView::td(array('class'=>'label '.($this_field != '' ? 'dragHandle' : ''), 'style'=>'width:120px;'),
+						RCView::td(array('class'=>'labelrc '.($this_field != '' ? 'dragHandle' : ''), 'style'=>'width:120px;'),
 							RCView::div(array('style'=>'line-height:20px;'),
 								RCView::span(array('style'=>'margin-left:25px;'), $lang['graphical_view_23'] . " ") . 
 								RCView::span(array('class'=>'field_num'), $field_counter++)
 							)
 						) .
 						// Dropdown/text box
-						RCView::td(array('class'=>'label', 'colspan'=>2),
+						RCView::td(array('class'=>'labelrc', 'colspan'=>2),
 							RCView::div(array('class'=>'field-auto-suggest-div', 'style'=>($this_field != '' ? 'display:none;' : '')),
 								self::outputFieldAutoSuggest() .
 								RCView::button(array('title'=>$lang['report_builder_32'], 'class'=>'jqbuttonsm field-dropdown-a', 'onclick'=>"showReportFieldAutoSuggest($(this),true);return false;", 'style'=>'font-size:11px;'), 
@@ -420,7 +420,7 @@ class LongitudinalReports
 							)
 						) .
 						// Delete
-						RCView::td(array('class'=>'label', 'style'=>'text-align:center;width:25px;'),
+						RCView::td(array('class'=>'labelrc', 'style'=>'text-align:center;width:25px;'),
 							RCView::a(array('href'=>'javascript:;', 'onclick'=>"deleteReportField($(this));", 'style'=>($this_field == '' ? 'display:none;' : '')),
 								RCView::img(array('src'=>'cross.png', 'class'=>'imgfix opacity75', 'title'=>$lang['design_170']))
 							)
@@ -430,11 +430,11 @@ class LongitudinalReports
 		
 		## ADDITIONAL FIELDS (OUTPUT DAG NAMES, OUTPUT SURVEY FIELDS, OUTPUT EVENT SCHEDULED DATES)
                 print   RCView::tr(array(),
-                                        RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
+                                        RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
                                                 'style'=>'background:#fff;border-left:0;border-right:0;height:5px;'), '')
                                 );
                 print   RCView::tr(array(),
-                                        RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
+                                        RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
                                                 RCView::div(array('style'=>'float:left;'),
                                                         RCView::img(array('src'=>'tag_orange.png', 'class'=>'imgfix')) .
                                                         $lang['report_builder_89'] . " " .
@@ -448,7 +448,7 @@ class LongitudinalReports
                         $outputDagChecked = ($report['output_dags']) ? 'checked' : '';
                         $exportDagOption = 
 			print   RCView::tr(array(),
-						RCView::td(array('class'=>'label', 'colspan'=>4, 'valign'=>'top', 'style'=>''),
+						RCView::td(array('class'=>'labelrc', 'colspan'=>4, 'valign'=>'top', 'style'=>''),
 							RCView::span(array('style'=>'margin:0 10px 0 20px;vertical-align:top;position:relative;top:4px;float:left;width:110px;'),
                                                                 $lang['global_114'].":"
                                                         ) .
@@ -461,7 +461,7 @@ class LongitudinalReports
 					);
                 }
                 print   RCView::tr(array(),
-                                        RCView::td(array('class'=>'label', 'colspan'=>4, 'valign'=>'top', 'style'=>''),
+                                        RCView::td(array('class'=>'labelrc', 'colspan'=>4, 'valign'=>'top', 'style'=>''),
                                                 // OUTPUT SCHEDULE DATES
                                                 RCView::div(array('style'=>(!$Proj->longitudinal ? 'display:none;' : '').'float:left;margin-bottom:5px;'),
                                                         RCView::span(array('style'=>'margin:0 10px 0 20px;vertical-align:top;position:relative;top:4px;float:left;width:110px;'),
@@ -483,7 +483,7 @@ class LongitudinalReports
                         $exportSurveyFieldsOptions = RCView::checkbox(array('name'=>'output_survey_fields', $outputSurveyFieldsChecked=>$outputSurveyFieldsChecked
                                 , 'disabled' => 'disabled')) . $lang['data_export_tool_179'];
                         print   RCView::tr(array(),
-                                        RCView::td(array('class'=>'label', 'colspan'=>4, 'valign'=>'top', 'style'=>'font-weight:normal;padding:8px;'),
+                                        RCView::td(array('class'=>'labelrc', 'colspan'=>4, 'valign'=>'top', 'style'=>'font-weight:normal;padding:8px;'),
                                                 $exportSurveyFieldsOptions
                                         )
                                 );*/
@@ -491,7 +491,7 @@ class LongitudinalReports
                         $surveyurl_dropdown_options = self::getSurveyUrlDropdownOptions();
                         
                         print   RCView::tr(array(),
-                                                RCView::td(array('class'=>'label', 'colspan'=>4, 'valign'=>'top', 'style'=>''),
+                                                RCView::td(array('class'=>'labelrc', 'colspan'=>4, 'valign'=>'top', 'style'=>''),
                                                         // SURVEYS
                                                         RCView::div(array('style'=>'float:left;margin-bottom:5px;'),
                                                                 RCView::span(array('style'=>'margin:0 10px 0 20px;vertical-align:top;position:relative;top:4px;float:left;width:110px;'),
@@ -524,11 +524,11 @@ class LongitudinalReports
 			}
 			$exportDagSurveyFieldsOptions = $exportDagOption . RCView::br() . $exportSurveyFieldsOptions;
 			print   RCView::tr(array(),
-						RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
+						RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
 							'style'=>'background:#fff;border-left:0;border-right:0;height:5px;'), '')
 					);
 			print   RCView::tr(array(),
-						RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
+						RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
 							RCView::div(array('style'=>'float:left;'),
 								RCView::img(array('src'=>'tag_orange.png', 'class'=>'imgfix')) .
 								$lang['report_builder_89'] . " " .
@@ -537,7 +537,7 @@ class LongitudinalReports
 						)
 					);
 			print   RCView::tr(array(),
-						RCView::td(array('class'=>'label', 'colspan'=>4, 'valign'=>'top', 'style'=>'font-weight:normal;padding:8px;'),
+						RCView::td(array('class'=>'labelrc', 'colspan'=>4, 'valign'=>'top', 'style'=>'font-weight:normal;padding:8px;'),
 							$exportDagSurveyFieldsOptions
 						)
 					);
@@ -546,7 +546,7 @@ class LongitudinalReports
 		## LIMTERS
 		// "Limiters" section header
 		print   RCView::tr(array(),
-					RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
+					RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
 						'style'=>'padding:0;background:#fff;border-left:0;border-right:0;height:45px;'), 
 						RCView::div(array('style'=>'color:#444;position:relative;top:10px;background-color:#ddd;border:1px solid #ccc;border-bottom:1px solid #ddd;float:left;padding:5px 8px;'),
 							$lang['global_117']." 3"
@@ -554,12 +554,12 @@ class LongitudinalReports
 					)
 				);
 		print   RCView::tr(array(),
-					RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>2, 'valign'=>'bottom', 'style'=>'border-right:0;'),
+					RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>2, 'valign'=>'bottom', 'style'=>'border-right:0;'),
 						RCView::img(array('src'=>'filter_plus.gif', 'class'=>'imgfix')) .
 						$lang['report_builder_35'] . " " .
 						RCView::span(array('style'=>'font-weight:normal;'), $lang['global_06'])
 					) .
-					RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>2, 'valign'=>'bottom', 'style'=>'border-left:0;'),
+					RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>2, 'valign'=>'bottom', 'style'=>'border-left:0;'),
 						/*// Help link
 						RCView::div(array('id'=>'how_to_filters_link', 'style'=>'text-align:right;margin:2px 5px 6px 0;'.($report['advanced_logic'] != '' ? 'display:none;' : '')),
 							RCView::img(array('src'=>'help.png', 'style'=>'vertical-align:middle;')) .
@@ -582,7 +582,7 @@ class LongitudinalReports
 			$display_limiter_and_row = ($limiter_field_num > 0 && $attr['limiter_group_operator'] == 'AND');
 			// Render "AND" row
 			print   RCView::tr(array('class'=>'limiter_and_row'.($report['advanced_logic'] != '' ? ' hidden' : ''), 'style'=>($display_limiter_and_row ? '' : 'display:none;')),
-						RCView::td(array('class'=>'label', 'colspan'=>4, 'style'=>'padding:8px 60px;background:#ddd;'),
+						RCView::td(array('class'=>'labelrc', 'colspan'=>4, 'style'=>'padding:8px 60px;background:#ddd;'),
 							RCView::select(array('lgo'=>$limiter_counter, 'class'=>'lgoc x-form-text x-form-field', 'style'=>'padding-right:0;height:22px;color:#800000;', 
 								'onchange'=>"displaylimiterGroupOperRow($(this));"), $limiter_group_operator_options, $attr['limiter_group_operator'])
 						)
@@ -590,7 +590,7 @@ class LongitudinalReports
 			// Render row
 			print   RCView::tr(array('class'=>'limiter_row'.($report['advanced_logic'] != '' ? ' hidden' : '')),
 						// Label
-						RCView::td(array('class'=>'label', 'style'=>'width:120px;'),
+						RCView::td(array('class'=>'labelrc', 'style'=>'width:120px;'),
 							// AND/OR limiter operator dropdown
 							RCView::span(array('style'=>'margin:0;'.(($limiter_field_num == 0 || $attr['limiter_group_operator'] == 'AND') ? 'visibility:hidden;' : '')), 
 								RCView::select(array('name'=>'limiter_group_operator[]', 'lgo'=>$limiter_counter, 'class'=>'lgoo x-form-text x-form-field', 'style'=>'font-size:11px;padding: 0 0 0 2px;', 
@@ -602,7 +602,7 @@ class LongitudinalReports
 								RCView::span(array('class'=>'limiter_num'), $limiter_counter++)
 							)
 						) .
-						RCView::td(array('class'=>'label', 'valign'=>'top'),
+						RCView::td(array('class'=>'labelrc', 'valign'=>'top'),
 							// Text box auto suggest
 							RCView::div(array('class'=>'field-auto-suggest-div nowrap', 'style'=>($attr['field_name'] != '' ? 'display:none;' : '')),
 								self::outputFieldAutoSuggest() .
@@ -625,14 +625,14 @@ class LongitudinalReports
 								)
 							)*/
 						) .
-						RCView::td(array('class'=>'label nowrap', 'valign'=>'top'),
+						RCView::td(array('class'=>'labelrc nowrap', 'valign'=>'top'),
 							// Operator drop-down list (>, <, =, etc.)
 							self::outputLimiterOperatorDropdown($attr['field_name'], $attr['limiter_operator'], $allValTypes) .
 							// Value text box OR drop-down list (if multiple choice)
 							self::outputLimiterValueTextboxOrDropdown($attr['field_name'], $attr['limiter_value'])
 						) .
 						// Delete
-						RCView::td(array('class'=>'label', 'style'=>'text-align:center;width:25px;'),
+						RCView::td(array('class'=>'labelrc', 'style'=>'text-align:center;width:25px;'),
 							RCView::a(array('href'=>'javascript:;', 'onclick'=>"deleteLimiterField($(this));", 'style'=>($attr['field_name'] == '' ? 'display:none;' : '')),
 								RCView::img(array('src'=>'cross.png', 'class'=>'imgfix opacity75', 'title'=>$lang['design_170']))
 							)
@@ -642,7 +642,7 @@ class LongitudinalReports
 		} 
 		## ADVANCED LOGIC TEXTBOX
 		print   RCView::tr(array('id'=>'adv_logic_row_link', 'style'=>($report['advanced_logic'] != '' ? 'display:none;' : '')),
-					RCView::td(array('colspan'=>'4', 'class'=>'label', 'style'=>'padding:10px;color:#444;font-weight:normal;'),
+					RCView::td(array('colspan'=>'4', 'class'=>'labelrc', 'style'=>'padding:10px;color:#444;font-weight:normal;'),
 						RCView::img(array('src'=>'arrow_circle_double_gray.gif', 'class'=>'imgfix')) . 
 						$lang['report_builder_92'] . RCView::SP . RCView::SP .
 						RCView::a(array('href'=>'javascript:;', 'style'=>'text-decoration:underline;font-weight:normal;', 'onclick'=>"showAdvancedLogicRow(true,false)"), 
@@ -652,7 +652,7 @@ class LongitudinalReports
 				);
 		print   RCView::tr(array('id'=>'adv_logic_row', 'style'=>($report['advanced_logic'] == '' ? 'display:none;' : '')),
 					// Label
-					RCView::td(array('colspan'=>'4', 'class'=>'label', 'style'=>'padding:10px;'),
+					RCView::td(array('colspan'=>'4', 'class'=>'labelrc', 'style'=>'padding:10px;'),
 						// AND/OR limiter operator dropdown
 						RCView::div(array('style'=>'margin:0 0 4px;'), 
 							RCView::div(array('style'=>'float:left;'), 
@@ -676,7 +676,7 @@ class LongitudinalReports
 					)
 				);
 		print   RCView::tr(array('id'=>'adv_logic_row_link2', 'style'=>($report['advanced_logic'] == '' ? 'display:none;' : '')),
-					RCView::td(array('colspan'=>'4', 'class'=>'label', 'style'=>'padding:10px;color:#444;font-weight:normal;'),
+					RCView::td(array('colspan'=>'4', 'class'=>'labelrc', 'style'=>'padding:10px;color:#444;font-weight:normal;'),
 						RCView::img(array('src'=>'arrow_circle_double_gray.gif', 'class'=>'imgfix')) . 
 						$lang['report_builder_92'] . RCView::SP . RCView::SP .
 						RCView::a(array('href'=>'javascript:;', 'style'=>'text-decoration:underline;font-weight:normal;', 'onclick'=>"showAdvancedLogicRow(false)"), 
@@ -689,12 +689,12 @@ class LongitudinalReports
 		if (/*$Proj->longitudinal ||*/ !empty($dag_dropdown_options))
 		{
 			print   RCView::tr(array(),
-						RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
+						RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
 							'style'=>'background:#fff;border-left:0;border-right:0;height:5px;'), '')
 					);
 			// "Additional filters" section header
 			print   RCView::tr(array(),
-						RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
+						RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
 							RCView::div(array('style'=>'float:left;'),
 								RCView::img(array('src'=>'filter.gif', 'class'=>'imgfix')) .
 								$lang['report_builder_36'] . " " .
@@ -707,7 +707,7 @@ class LongitudinalReports
 						)
 					);
 			print   RCView::tr(array(),
-						RCView::td(array('class'=>'label', 'colspan'=>4, 'valign'=>'top', 'style'=>''),
+						RCView::td(array('class'=>'labelrc', 'colspan'=>4, 'valign'=>'top', 'style'=>''),
 /*							// FILTER EVENTS
 							RCView::div(array('style'=>(!$Proj->longitudinal ? 'display:none;' : '').'float:left;margin-bottom:5px;'),
 								RCView::span(array('style'=>'margin:0 10px 0 20px;vertical-align:top;position:relative;top:4px;float:left;width:110px;'),
@@ -734,7 +734,7 @@ class LongitudinalReports
 		## SORTING FIELDS USED IN REPORT
 		// "Sorting" section header
 		print   RCView::tr(array(),
-					RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
+					RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
 						'style'=>'padding:0;background:#fff;border-left:0;border-right:0;height:45px;'), 
 						RCView::div(array('style'=>'color:#444;position:relative;top:10px;background-color:#ddd;border:1px solid #ccc;border-bottom:1px solid #ddd;float:left;padding:5px 8px;'),
 							$lang['global_117']." 4"
@@ -742,7 +742,7 @@ class LongitudinalReports
 					)
 				);
 		print   RCView::tr(array(),
-					RCView::td(array('class'=>'label create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
+					RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
 						RCView::img(array('src'=>'sort_ascend.png', 'class'=>'imgfix')) .
 						$lang['report_builder_20'] . " " .
 						RCView::span(array('style'=>'font-weight:normal;'), $lang['global_06'])
@@ -750,10 +750,10 @@ class LongitudinalReports
 				);
 		// SORT FIELD 1
 		print   RCView::tr(array('class'=>'sort_row'),
-					RCView::td(array('class'=>'label', 'style'=>'width:120px;'),
+					RCView::td(array('class'=>'labelrc', 'style'=>'width:120px;'),
 						$lang['report_builder_25']
 					) .
-					RCView::td(array('class'=>'label', 'valign'=>'top'),
+					RCView::td(array('class'=>'labelrc', 'valign'=>'top'),
 						RCView::div(array('class'=>'field-auto-suggest-div nowrap', 'style'=>($report['orderby_field1'] != '' ? 'display:none;' : '')),
 							self::outputFieldAutoSuggest() .
 							RCView::button(array('title'=>$lang['report_builder_32'], 'class'=>'jqbuttonsm sort-dropdown-a', 'onclick'=>"showSortFieldAutoSuggest($(this),true);return false;", 'style'=>'font-size:11px;'), 
@@ -767,16 +767,16 @@ class LongitudinalReports
 							)
 						)
 					) .
-					RCView::td(array('class'=>'label', 'valign'=>'top', 'colspan'=>2),
+					RCView::td(array('class'=>'labelrc', 'valign'=>'top', 'colspan'=>2),
 						self::outputSortAscDescDropdown($report['orderby_sort1'])
 					)
 				);	
 		// SORT FIELD 2
 		print   RCView::tr(array('class'=>'sort_row'),
-					RCView::td(array('class'=>'label', 'style'=>'width:120px;'),
+					RCView::td(array('class'=>'labelrc', 'style'=>'width:120px;'),
 						$lang['report_builder_26']
 					) .
-					RCView::td(array('class'=>'label', 'valign'=>'top'),
+					RCView::td(array('class'=>'labelrc', 'valign'=>'top'),
 						RCView::div(array('class'=>'field-auto-suggest-div nowrap', 'style'=>($report['orderby_field2'] != '' ? 'display:none;' : '')),
 							self::outputFieldAutoSuggest() .
 							RCView::button(array('title'=>$lang['report_builder_32'], 'class'=>'jqbuttonsm sort-dropdown-a', 'onclick'=>"showSortFieldAutoSuggest($(this),true);return false;", 'style'=>'font-size:11px;'), 
@@ -790,16 +790,16 @@ class LongitudinalReports
 							)
 						)
 					) .
-					RCView::td(array('class'=>'label', 'valign'=>'top', 'colspan'=>2),
+					RCView::td(array('class'=>'labelrc', 'valign'=>'top', 'colspan'=>2),
 						self::outputSortAscDescDropdown($report['orderby_sort2'])
 					)
 				);		
 		// SORT FIELD 3
 		print   RCView::tr(array('class'=>'sort_row'),
-					RCView::td(array('class'=>'label', 'style'=>'width:120px;'),
+					RCView::td(array('class'=>'labelrc', 'style'=>'width:120px;'),
 						$lang['report_builder_26']
 					) .
-					RCView::td(array('class'=>'label', 'valign'=>'top'),
+					RCView::td(array('class'=>'labelrc', 'valign'=>'top'),
 						RCView::div(array('class'=>'field-auto-suggest-div nowrap', 'style'=>($report['orderby_field3'] != '' ? 'display:none;' : '')),
 							self::outputFieldAutoSuggest() .
 							RCView::button(array('title'=>$lang['report_builder_32'], 'class'=>'jqbuttonsm sort-dropdown-a', 'onclick'=>"showSortFieldAutoSuggest($(this),true);return false;", 'style'=>'font-size:11px;'), 
@@ -813,7 +813,7 @@ class LongitudinalReports
 							)
 						)
 					) .
-					RCView::td(array('class'=>'label', 'valign'=>'top', 'colspan'=>2),
+					RCView::td(array('class'=>'labelrc', 'valign'=>'top', 'colspan'=>2),
 						self::outputSortAscDescDropdown($report['orderby_sort3'])
 					)
 				);			
@@ -2122,9 +2122,13 @@ class LongitudinalReports
 										 $report['limiter_logic'], $outputAsLabels, $outputHeadersAsLabels, $hashRecordID, $dateShiftDates, 
 										 $dateShiftSurveyTimestamps, $sortArray, ($outputType != 'report'), true, $returnIncludeRecordEventArray, 
 										 true, $outputSurveyIdentifier, $outputCheckboxLabel, $outputScheduleDates, $outputSurveyUrls);
-		// Replace any MS Word chacters in the data
-		$data_content = replaceMSchars($data_content);
-		
+		// Replace any MS Word chacters in the data (from 6.12.0 string passed by ref)
+                if (version_compare($redcap_version, '6.12.0', '<')) {
+                        $data_content = replaceMSchars($data_content);
+                } else {
+                        replaceMSchars($data_content[0]);
+                }
+                
 		## Logging (for exports only)
 		if ($outputType != 'report' || $isAPI) {
 			// Set data_values as JSON-encoded

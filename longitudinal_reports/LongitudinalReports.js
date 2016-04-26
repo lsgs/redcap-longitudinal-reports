@@ -497,7 +497,6 @@ function fetchReportAjax(report_id,pagenum) {
 	$('#report_load_progress2').hide();
 	$('#report_parent_div').html('');
 	$('.FixedHeader_Cloned , #FixedTableHdrsEnable').remove();
-	resizeMainWindow();
 	if (pagenum == null) pagenum = '';
 	// Ajax call
 	exportajax = $.post(app_path_webroot+lrPluginPath+'report_ajax.php?pid='+pid+getInstrumentsListFromURL()+'&pagenum='+pagenum, { report_id: report_id }, function(data) {
@@ -517,8 +516,6 @@ function fetchReportAjax(report_id,pagenum) {
 			document.getElementById('report_parent_div').innerHTML = data;
 			// Buttonize the report buttons
 			$('.report_btn').button();
-			// Resize windows
-			resizeMainWindowSub();
 			// Change width of pagenum div (if exists on page)
 			if ($('.report_pagenum_div').length) {
 				var table_width = $('#report_table').width();
@@ -531,10 +528,6 @@ function fetchReportAjax(report_id,pagenum) {
 			}
 			// Enable fixed table headers for event grid
 			enableFixedTableHdrs('report_table',true,false);
-			// Also set it to run again if the page is resized
-			$(window).resize(function() {
-				enableFixedTableHdrs('report_table',true,false); 
-			});
 		},10);
 	})
 	.fail(function(xhr, textStatus, errorThrown) {
