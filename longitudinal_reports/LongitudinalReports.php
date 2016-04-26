@@ -1972,7 +1972,7 @@ class LongitudinalReports
 									$selectedInstruments=array(), $selectedEvents=array(), $returnIncludeRecordEventArray=false,
 									$outputCheckboxLabel=false)
 	{
-		global $Proj, $user_rights, $isAjax, $app_title, $lang;
+		global $Proj, $user_rights, $isAjax, $app_title, $lang, $redcap_version;
 		
 		// Check report_id
 		if (!is_numeric($report_id) && $report_id != 'ALL' && $report_id != 'SELECTED') {
@@ -2126,7 +2126,12 @@ class LongitudinalReports
                 if (version_compare($redcap_version, '6.12.0', '<')) {
                         $data_content = replaceMSchars($data_content);
                 } else {
-                        replaceMSchars($data_content[0]);
+                        //replaceMSchars(is_array($data_content) ? $data_content[0] : $data_content); //"Only variables can be passed by reference"
+                        if(is_array($data_content)) {
+                            replaceMSchars($data_content[0]);
+                        } else {
+                            replaceMSchars($data_content);
+                        }
                 }
                 
 		## Logging (for exports only)
