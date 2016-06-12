@@ -14,8 +14,8 @@ view that REDCap's standard Data Exports & Reports module gives you.
 
 For more description and background on the problem this plugin aims to solve
 please see my "Longitudinal Reports" presentation from REDCapCon 2015, included 
-in this repo (Conference_Presentation.pdf) and available via the REDCap wiki 
-conference page https://iwg.devguard.com/trac/redcap/wiki/REDCap
+in this repo (Conference_Presentation.pdf) and available via the conference 
+presentations page at https://starbrite.vanderbilt.edu/rocket/index.php?doc_id=11677 
 
 ********************************************************************************
 ##Licence
