@@ -1867,7 +1867,8 @@ class LongitudinalRecords
                                                                                         )
                                                                                 );
                                                                 } else {
-                                                                        $cell = $this_value;  // Show completion timestamp
+                                                                        // Show completion timestamp
+									$cell = DateTimeRC::datetimeConvert(substr($this_value, 0, 16), 'ymd', DateTimeRC::get_user_format_base());
                                                                 }
                                                         }
 							// For a radio, select, or advcheckbox, show both num value and text

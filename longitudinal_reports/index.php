@@ -36,6 +36,14 @@ if ($user_rights['expiration'] != "" && $user_rights['expiration'] < TODAY) {
 	exit;
 }
 
+// Check configuration of report store project
+$check = LongitudinalReports::checkReportStoreProjectConfig();
+if ($check !== true) {
+        exitWithMessage('There is a problem with the configuration of the report store project:<br>'.$check);
+	exit;
+}
+
+
 // Place all HTML here
 $html = "";
 
@@ -314,7 +322,7 @@ function exitWithMessage($msg) {
     include APP_PATH_DOCROOT . 'ProjectGeneral/header.php';
     print RCView::div(array('style'=>'max-width:750px;margin-bottom:10px;'),
                     RCView::div(array('style'=>'color: #800000;font-size: 16px;font-weight: bold;float:left;'), 
-                            PLUGIN_TITLE 
+                            LR_PLUGIN_TITLE
                     ) . RCView::div(array('class'=>'clear'), '') );
     displayMsg($msg, "errorMsg","center","red","exclamation_frame.png", 600);
     include APP_PATH_DOCROOT . 'ProjectGeneral/footer.php'; 

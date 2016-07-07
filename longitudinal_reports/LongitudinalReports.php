@@ -2,7 +2,6 @@
 /* 
  * Longitudinal Reports Plugin
  * Luke Stevens, Murdoch Childrens Research Institute https://www.mcri.edu.au
- * Version date 16-Nov-2015 
  */
 
 /**
@@ -1023,7 +1022,7 @@ class LongitudinalReports
                 $eventFieldList = self::longitudinalEventsFormsFields();
 
                 $rc_fields = array();
-                $rc_fields[] = "'[".$Proj->table_pk."] ".$Proj->table_pk_label."'";
+                $rc_fields[] = "'[".$Proj->table_pk."] ".self::cleanString($Proj->table_pk_label)."'";
                 
 /*		foreach ($eventFormFields as $event=>$eventAttrs) {
                     foreach ($eventAttrs['forms'] as $form=>$formAttrs) {
@@ -1037,7 +1036,7 @@ class LongitudinalReports
                     // Skip if pk field (added separately)
                     if ($fieldAttrs['field_name'] == $Proj->table_pk) continue;
 
-                    $label = $fieldAttrs['field_label'];
+                    $label = self::cleanString($fieldAttrs['field_label']);
                     
                     if (strlen($label) > 65) {
                         $label = str_replace("...'", "...", trim(substr($label, 0, 47)) . "..." . trim(substr($label, -15)));
@@ -3108,7 +3107,7 @@ class LongitudinalReports
                 
 		// Build an array of drop-down options listing all REDCap fields
 		$rc_fields = array(''=>'-- '.$lang['random_02'].' --');
-		$rc_fields["Record ID Field"][$Proj->table_pk] = $Proj->table_pk.' "'.$Proj->table_pk_label.'"';
+		$rc_fields["Record ID Field"][$Proj->table_pk] = $Proj->table_pk.' "'.self::cleanString($Proj->table_pk_label).'"';
 		
                 $eventFieldList = self::longitudinalEventsFormsFields();
                 
@@ -3116,7 +3115,7 @@ class LongitudinalReports
                     $event = $fieldAttrs['event_name'];
                     $form = $fieldAttrs['form_title'];
                     $fieldName = $fieldAttrs['field_name'];
-                    $label = $fieldAttrs['field_label'];
+                    $label = self::cleanString($fieldAttrs['field_label']);
                     
                     if (strlen($label) > 65) {
                         $label = trim(substr($label, 0, 47)) . "... " . trim(substr($label, -15));
@@ -3217,5 +3216,54 @@ class LongitudinalReports
                 }
             }
             return $surveyTitles;
+        }
+        
+        /**
+         * Strip all tags, convert line break to space and trim string
+         * @param string The string to clean
+         * @return string The cleaned string
+         */
+        public static function cleanString($str) {
+            return trim(str_replace(array("\n", "\r"), ' ', strip_tags2($str)));
+        }
+        
+        public static function checkReportStoreProjectConfig() {
+            $storePid = LR_REPORT_DATA_PROJECT_ID;
+
+            $sql = "select app_title, repeatforms from redcap_projects where project_id = $storePid ";
+            $q = db_query($sql);
+
+            // store project exists?
+            if ($q->num_rows === 0) { return "Report store project id ($storePid) does not exist. Fix the setting in config.php."; }
+
+            // not set to be longitudinal?
+            $row = db_fetch_assoc($q);
+            if ($row['repeatforms'] !== '0') { 
+                return "Report store project ({$row['app_title']}) <strong>must not</strong> be longitudinal."; 
+            }
+            
+            // contains expected fields
+            $expectedFields = array(
+                'report_id','project_id','deleted','title','report_order',
+                'user_access','user_access_dags','user_access_roles','user_access_users',
+                'fields','output_dags','output_survey_fields','output_schedule_dates','output_survey_urls',
+                'limiter_fields','advanced_logic','filter_dags',
+                'orderby_field1','orderby_sort1','orderby_field2','orderby_sort2','orderby_field3','orderby_sort3',
+                'update_by','update_at'
+            );
+            
+            $notFound = array();
+            $storeFields = REDCap::getDataDictionary($storePid, 'array');
+            foreach ($expectedFields as $f) {
+                if (!array_key_exists($f, $storeFields)) {
+                    $notFound[] = $f;
+                }
+            }
+            if (count($notFound) > 0) { 
+                return "Report store project ({$row['app_title']}) is missing the following expected fields: ".
+                        implode(', ', $notFound); 
+            }
+            
+            return true;
         }
 }
