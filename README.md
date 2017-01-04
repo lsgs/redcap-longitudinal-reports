@@ -17,15 +17,6 @@ please see my "Longitudinal Reports" presentation from REDCapCon 2015, included
 in this repo (Conference_Presentation.pdf) and available via the conference 
 presentations page at https://starbrite.vanderbilt.edu/rocket/index.php?doc_id=11677 
 
-********************************************************************************
-##Licence
-
-Released under standard GPL license: no warranty provided; you are responsible 
-for ensuring this code or any modifications to it meet your requirements. 
-
-Please also leave attribution to this repository in the code and push back 
-updates and enhancements.
-
 Note regarding v7 repeating forms/events:
 REDCap v7.0.0 introduced functionality for repeating forms or events - a big 
 change to the data model as an event/field combination need no longer be unique.
@@ -34,6 +25,15 @@ repeated form or event.
 Note that REDCap core code has not yet implemented any mechanism for referencing
 repeating instances within filter logic, hence logic incorporating fields from 
 a repeating form or events will not be functional.
+
+********************************************************************************
+##Licence
+
+Released under standard GPL license: no warranty provided; you are responsible 
+for ensuring this code or any modifications to it meet your requirements. 
+
+Please also leave attribution to this repository in the code and push back 
+updates and enhancements.
 
 ********************************************************************************
 ##Demonstration
