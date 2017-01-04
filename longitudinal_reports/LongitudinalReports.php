@@ -75,7 +75,12 @@ class LongitudinalReports
                                         );
 		}
 		// Render the tabs
-		renderTabs($tabs);
+                // REDCap v7 csrf functions refactored as static methods of System class
+                if (version_compare(REDCAP_VERSION, '7.0.0', '<')) {
+                        renderTabs($tabs);
+                } else {
+                        RCView::renderTabs($tabs);
+                }
 	}
 	
 	
@@ -364,6 +369,9 @@ class LongitudinalReports
 					)
 				);
                 // "Fields" section header
+                $messageOnRepeating = (version_compare(REDCAP_VERSION, '7.0.0', '>=') && $Proj->hasRepeatingFormsEvents()) 
+                        ? '<div style="float:right;font-size:11px;padding:5px;" class="text-warning bg-warning">Repeating forms/events: <span style="font-weight:normal;">Only the last instance will be included.</span></div>'
+                        : '';
                 print   RCView::tr(array(),
                                   RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom'),
                                       RCView::div(array('style'=>'float:left;'),
@@ -371,7 +379,7 @@ class LongitudinalReports
                                           $lang['report_builder_29']
                                       ) .
                                       // Quick Add button
-                                      RCView::div(array('style'=>'float:left;margin-left:40px;'),
+                                      RCView::div(array('style'=>'float:left;margin:0 20px;'),
                                           RCView::button(array('class'=>'jqbuttonsm', 'style'=>'color:green;font-size:11px;font-family:arial;', 'onclick'=>"openQuickAddDialog(this); return false;"),
                                               RCView::img(array('src'=>'plus_small2.png', 'style'=>'vertical-align:middle;')) .
                                               RCView::span(array('style'=>'vertical-align:middle;'),
@@ -379,7 +387,7 @@ class LongitudinalReports
                                               )
                                           ).
                                           RCView::img(array('src' => 'progress_circle.gif', 'id' => 'imgQAProgress', 'style' => 'display:none;'))
-                                      ) 
+                                      ) . $messageOnRepeating
                                   )
                               );
 		// Fill rows of fields (only for existing reports)
@@ -544,6 +552,10 @@ class LongitudinalReports
 
 		## LIMTERS
 		// "Limiters" section header
+                $messageOnRepeating = (version_compare(REDCAP_VERSION, '7.0.0', '>=') && $Proj->hasRepeatingFormsEvents()) 
+                        ? '<div style="float:right;font-size:11px;padding:5px;" class="text-warning bg-warning">Logic for fields in repeated form/event not supported.</div>'
+                        : '';
+
 		print   RCView::tr(array(),
 					RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>4, 'valign'=>'bottom', 
 						'style'=>'padding:0;background:#fff;border-left:0;border-right:0;height:45px;'), 
@@ -556,7 +568,8 @@ class LongitudinalReports
 					RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>2, 'valign'=>'bottom', 'style'=>'border-right:0;'),
 						RCView::img(array('src'=>'filter_plus.gif', 'class'=>'imgfix')) .
 						$lang['report_builder_35'] . " " .
-						RCView::span(array('style'=>'font-weight:normal;'), $lang['global_06'])
+						RCView::span(array('style'=>'font-weight:normal;'), $lang['global_06']) .
+                                                $messageOnRepeating
 					) .
 					RCView::td(array('class'=>'labelrc create_rprt_hdr', 'colspan'=>2, 'valign'=>'bottom', 'style'=>'border-left:0;'),
 						/*// Help link
@@ -3153,8 +3166,10 @@ class LongitudinalReports
                 $saveArray = array();
                 
                 // Add 'event' level so array is in format expected by REDCap::saveData
+                // From v7.0.0 needs to be non-zero due to Records.php line 3688 if ($this_event_id == 'repeat_instances') {
+                $i=1;
                 foreach ($saveReportsArray as $rptParams) {
-                    $saveArray[$rptParams['report_id']][] = $rptParams;
+                    $saveArray[$rptParams['report_id']][$i++] = $rptParams;
                 }
                 
                 $result = REDCap::saveData(

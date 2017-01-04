@@ -3,8 +3,6 @@
  * Longitudinal Reports Plugin
  * Luke Stevens, Murdoch Childrens Research Institute https://www.mcri.edu.au
  * 
- * Version date 16-Nov-2015 
- * 
  * Installation
  *  - See README.txt
  *  - Set the vaue of the constants below to suit your environment
@@ -34,7 +32,7 @@ define('LR_SHOW_QUICK_ADD_ALL_GROUP_THRESHOLD', 25);              // Hide "selec
 
 // Override standard Data Export tool text
 $lang['report_builder_15'] = "You may create a new longitudinal report by selecting the event/fields below that you want to include in the report. You may add as many fields to your report as you wish. You will also need to provide a name for your report. When you are finished selecting the fields you wish to include in the report, click the Save Report button at the bottom. The new report will then be added to your list of longitudinal reports above.";
-$lang['report_builder_29'] = "Event / field combinations to include in report";
+$lang['report_builder_29'] = "Event / field combinations to include";
 $lang['report_builder_47'] = "My Longitudinal Reports";
 $lang['report_builder_117'] = "<p>The Longitudinal Reports module is a <strong>$institution plugin</strong> that extends REDCap's standard Data Export & Reports functionality for longitudinal projects. "
                             . "Build reports by selecting event/field combinations and specifying filter criteria, then get your results listed in row-per-participant format rather than as row-per-participant-per-event.</p>"

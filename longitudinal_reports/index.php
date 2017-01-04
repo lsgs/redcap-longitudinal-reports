@@ -2,15 +2,9 @@
 /* 
  * Longitudinal Reports Plugin
  * Luke Stevens, Murdoch Childrens Research Institute https://www.mcri.edu.au
- * Version date 16-Nov-2015 
  * LS Altered for LongitudinalReport from redcap_v6.4.3/DataExport/index.php
  */
 
-/* 
- * TODO 
- *  - 
- */
- 
 // Set all parameters and include necessary files
 require_once dirname(__FILE__) . '/config.php';
 
@@ -282,7 +276,14 @@ var langExportFailed = '<?php print cleanHtml($lang['report_builder_129']) ?>';
 // init_functions.php createCsrfToken() does not work on pages with defined('PLUGIN')
 // CSRF token is required for call to advanced logic checking in 
 // Surveys/automated_invitations_check_logic.php from LongitudinalReports.js function saveReport()
-var redcap_csrf_token = '<?php echo getCsrfToken() ?>';
+// REDCap v7 csrf functions refactored as static methods of System class
+var redcap_csrf_token = '<?php 
+if (version_compare(REDCAP_VERSION, '7.0.0', '<')) {
+    echo getCsrfToken();
+} else {
+    echo System::getCsrfToken();
+}
+?>';
 $(function(){ appendCsrfTokenToForm(); });
 
 </script>

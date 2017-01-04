@@ -2,7 +2,6 @@
 /* 
  * Longitudinal Reports Plugin
  * Luke Stevens, Murdoch Childrens Research Institute https://www.mcri.edu.au
- * Version date 16-Nov-2015 
  */
 
 /**
@@ -1698,7 +1697,12 @@ class LongitudinalRecords
 				// Set extra set of reserved field names for survey timestamps and return codes pseudo-fields
 				$reserved_field_names2 = explode(',', implode("_timestamp,", array_keys($Proj->forms)) . "_timestamp"
 									   . "," . implode("_return_code,", array_keys($Proj->forms)) . "_return_code");
-				$reserved_field_names2 = $reserved_field_names + array_fill_keys($reserved_field_names2, 'Survey Timestamp');
+            
+                                if (version_compare(REDCAP_VERSION, '7.0.0', '<')) {
+        				$reserved_field_names2 = $reserved_field_names + array_fill_keys($reserved_field_names2, 'Survey Timestamp');
+                                } else {
+                                        $reserved_field_names2 = Project::$reserved_field_names + array_fill_keys($reserved_field_names2, 'Survey Timestamp');
+                                }
 				// Place all html in $html
 				$html = $pageNumDropdown . "<table id='report_table' class='dt2' style='margin:0;font-family:Verdana;font-size:11px;'>";
 				$mc_choices = array();
@@ -1910,9 +1914,14 @@ class LongitudinalRecords
 							// If record name, then convert it to a link (unless project is archived/inactive)
 							if ($Proj->project['status'] < 2 && $this_fieldname == $Proj->table_pk) {
 								// Link URL
-								$this_arm = ($Proj->longitudinal) ? $Proj->eventInfo[$eventsUniqueEventId[$line['redcap_event_name']]]['arm_num'] : $Proj->firstArmNum;
+								$this_arm = $Proj->firstArmNum; // ($Proj->longitudinal) ? $Proj->eventInfo[$eventsUniqueEventId[$line['redcap_event_name']]]['arm_num'] : $Proj->firstArmNum;
 								if ($longitudinal) {
-									$this_url = "grid.php?pid={$Proj->project_id}&id=".removeDDEending($this_value)."&arm=$this_arm";
+                                                                        if (version_compare(REDCAP_VERSION, '7.0.0', '<')) {
+        									$this_url = "grid.php?pid={$Proj->project_id}&id=".removeDDEending($this_value)."&arm=$this_arm";
+                                                                        } else {
+                                                                                $this_url = "record_home.php?pid={$Proj->project_id}&id=".removeDDEending($this_value)."&arm=$this_arm";
+                                                                        }
+
 								} else {
 									$this_url = "index.php?pid={$Proj->project_id}&id=".removeDDEending($this_value)."&page=".$first_form;
 								}
