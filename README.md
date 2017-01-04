@@ -26,6 +26,15 @@ for ensuring this code or any modifications to it meet your requirements.
 Please also leave attribution to this repository in the code and push back 
 updates and enhancements.
 
+Note regarding v7 repeating forms/events:
+REDCap v7.0.0 introduced functionality for repeating forms or events - a big 
+change to the data model as an event/field combination need no longer be unique.
+As of 04-Jan-2017 the plugin will display data from the last instance of a 
+repeated form or event. 
+Note that REDCap core code has not yet implemented any mechanism for referencing
+repeating instances within filter logic, hence logic incorporating fields from 
+a repeating form or events will not be functional.
+
 ********************************************************************************
 ##Demonstration
 
@@ -39,7 +48,7 @@ Look for the "Longitudinal Reports" bookmark.
 ********************************************************************************
 ##REDCap Version Requirements
 
-The plugin is designed to work with REDCap v6.9.0 and later. 
+The plugin is designed to work with REDCap v6.9.0 and later (including 7.0.0+). 
  - 6.9.0+        All good
  - 6.8.0 - 6.8.2 You may experience problems with sessions logging out on
                  plugin pages
