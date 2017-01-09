@@ -79,16 +79,36 @@ link to the longitudinal reports page on the main REDCap Data Export page.
     - Path to plugin directory relative to APP_PATH_WEBROOT (which is 
       something like https://redcap.institution.edu/redcap_v6.11.1 )
 
-4. Create a project bookmark to the main plugin page:
-    - Link Label: Longitudinal Reports (or whatever you like)
-    - Link URL:   https://[your server]/plugins/longitudinal_reports/index.php
-    - Link Type:  Simple Link
-    - Append project ID: Yes
+4. (Optional) Use the redcap_every_page_top hook to inject a new item into the 
+   Applications menu for users with export permission in longitudinal projects.
 
-###Optional REDCap Code Changes^
+```
+/**
+ * All project pages in longitudinal projects (for users with Export permission)
+ *  - include link to Longitudinal Reports in Applications menu
+ */
+if (isset($_GET['pid']) && $_GET['pid']>0 && $Proj->longitudinal && (SUPER_USER || $user_rights['data_export_tool']>=1)) {
+    print RCView::div(array('style' => 'display:none;', 'id' => 'lrMenuLink', 'class' => 'hang'),
+        RCView::img(array('style' => 'margin-top:2px;', 'src' => APP_PATH_IMAGES.'layout_down_arrow.gif')) .
+        RCView::a(array(
+                'href' => APP_PATH_WEBROOT_FULL.'plugins/longitudinal_reports/index.php?pid='.$_GET['pid']), 
+                "Longitudinal Reports"
+        )
+    );
+?>
+<script type='text/javascript'>
+$(document).ready(function() {
+    $('#lrMenuLink').detach().appendTo('#app_panel .menubox:last').show();
+});
+</script>
+<?php
+}
+```
+
+###Optional REDCap Core Code Changes^
 
 1. Add an information message about the plugin - and a link - on REDCap's main
-   Data Export module page
+   Data Export module page (may not be required if using hook as per 4, above)
 
    redcap_v6.11.1/DataExport/index.php line 257
    
@@ -101,21 +121,21 @@ link to the longitudinal reports page on the main REDCap Data Export page.
 
    redcap_v6.11.1/API/report/export.php line 28
 
-   Request a longitudinal report by including a longitudinal_reports = 1 
+   Request a longitudinal report by including a longitudinal_reports=1 
    parameter in your API report export request (POST). This code detects the 
    presence of this parameter and redirects the processing to the Longitudinal
    Reports plugin:
 
    Find this code block around lines 28 - 31:
- 
+ ```php
 		// Export the data for this report
 		$content = DataExport::doReport($post['report_id'], 'export', $format, ($post['rawOrLabel'] == 'label'), ($post['rawOrLabelHeaders'] == 'label'), 
 			false, false, $removeIdentifierFields, $hashRecordID, $removeUnvalidatedTextFields, 
 			$removeNotesFields, $removeDateFields, false, false, array(), array(), false, $post['exportCheckboxLabel']);
-   
+```   
    Surround the existing block with an if statement that will catch the presence of a longitudinal_reports POST 
    parameter and redirect flow to the longitudinal_reports code:
-   
+```php
 		if (isset($post['longitudinal_reports']) && (bool)$post['longitudinal_reports']) {
 				require_once('../../plugins/longitudinal_reports/config.php');
 				$content = LongitudinalReports::doReport($post['report_id'], 'export', $format, ($post['rawOrLabel'] == 'label'), ($post['rawOrLabelHeaders'] == 'label'), 
@@ -127,7 +147,7 @@ link to the longitudinal reports page on the main REDCap Data Export page.
 					false, false, $removeIdentifierFields, $hashRecordID, $removeUnvalidatedTextFields, 
 					$removeNotesFields, $removeDateFields, false, false, array(), array(), false, $post['exportCheckboxLabel']);
 		}
- 
+ ```
  ^ Note that changes to the main REDCap code must be re-made with each version
  upgrade. Note also that line numbers may vary between versions.
 
