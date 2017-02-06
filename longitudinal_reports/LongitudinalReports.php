@@ -2159,7 +2159,11 @@ class LongitudinalReports
 			if (isset($user_rights['data_export_tool']) && $user_rights['data_export_tool'] == '3') $data_values['removed_identifiers'] = 'Yes';
 			$data_values['fields'] = (empty($fields)) ? array_keys($Proj->metadata) : $fields;
 			// Log it
-			log_event("","redcap_data","longitudinal_report","",json_encode($data_values),"Longitudinal Report" . ($isAPI ? " (API)" : ""));								 
+			if (REDCap::versionCompare(REDCAP_VERSION, '7.0.0') >= 0) {
+				Logging::logEvent("","redcap_data","longitudinal_report","",json_encode($data_values),"Longitudinal Report" . ($isAPI ? " (API)" : ""));
+			} else {
+				log_event("","redcap_data","longitudinal_report","",json_encode($data_values),"Longitudinal Report" . ($isAPI ? " (API)" : ""));
+			}
 		}
 		
 		// IF OUTPUTTING A REPORT, RETURN THE CONTENT HERE
