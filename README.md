@@ -1,12 +1,12 @@
 ********************************************************************************
-#Longitudinal Reports REDCap Plugin
+# Longitudinal Reports REDCap Plugin
 
 Luke Stevens, Murdoch Childrens Research Institute https://www.mcri.edu.au
 ********************************************************************************
 
 
 ********************************************************************************
-##Functionality
+## Functionality
 
 The "Longitudinal Reports" plugin lets you see row-per-participant data for 
 longitudinal REDCap projects, rather than the row-per-event-per-participant
@@ -27,7 +27,7 @@ repeating instances within filter logic, hence logic incorporating fields from
 a repeating form or events will not be functional.
 
 ********************************************************************************
-##Licence
+## Licence
 
 Released under standard GPL license: no warranty provided; you are responsible 
 for ensuring this code or any modifications to it meet your requirements. 
@@ -36,17 +36,18 @@ Please also leave attribution to this repository in the code and push back
 updates and enhancements.
 
 ********************************************************************************
-##Demonstration
+## Demonstration
 
 You can view the plugin in action on MCRI's server and have a go at creating/
 editing/viewing reports. 
-    URL       https://redcap.mcri.edu.au/redcap_v6.11.1/index.php?pid=2011
-    Username  lrdemo
-    Password  lrDemo123
+ - URL       https://redcap.mcri.edu.au/redcap_v7.1.2/index.php?pid=2011
+ - Username  lrdemo
+ - Password  lrDemo123
+
 Look for the "Longitudinal Reports" bookmark.
 
 ********************************************************************************
-##REDCap Version Requirements
+## REDCap Version Requirements
 
 The plugin is designed to work with REDCap v6.9.0 and later (including 7.0.0+). 
  - 6.9.0+        All good
@@ -56,7 +57,7 @@ The plugin is designed to work with REDCap v6.9.0 and later (including 7.0.0+).
                  equivalent code that saves report data via the REDCap API
 
 ********************************************************************************
-##Installation
+## Installation
 
 The plugin functions without requiring any changes to the main REDCap codebase, 
 although there are two optional changes described below: one to enable the 
@@ -77,7 +78,7 @@ link to the longitudinal reports page on the main REDCap Data Export page.
     - Project id of report data store project created in step 2
     - Path to redcap_connect.php relative to longitudinal_reports/config.php
     - Path to plugin directory relative to APP_PATH_WEBROOT (which is 
-      something like https://redcap.institution.edu/redcap_v6.11.1 )
+      something like https://redcap.institution.edu/redcap_v7.1.2 )
 
 4. (Optional) Use the redcap_every_page_top hook to inject a new item into the 
    Applications menu for users with export permission in longitudinal projects.
@@ -105,12 +106,12 @@ $(document).ready(function() {
 }
 ```
 
-###Optional REDCap Core Code Changes^
+### Optional REDCap Core Code Changes^
 
 1. Add an information message about the plugin - and a link - on REDCap's main
    Data Export module page (may not be required if using hook as per 4, above)
 
-   redcap_v6.11.1/DataExport/index.php line 257
+   redcap_v7.1.2/DataExport/index.php line 257
    
    To include the message file included with the plugin, change
       257  // Tabs
@@ -119,7 +120,7 @@ $(document).ready(function() {
 
 2. Enable Longitudinal Reports to be exported using the REDCap API
 
-   redcap_v6.11.1/API/report/export.php line 28
+   redcap_v7.1.2/API/report/export.php line 28
 
    Request a longitudinal report by including a longitudinal_reports=1 
    parameter in your API report export request (POST). This code detects the 
