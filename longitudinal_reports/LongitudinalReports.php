@@ -2892,7 +2892,12 @@ class LongitudinalReports
 			}	
 		} else {
 			// Store using WebDAV
-			require_once (APP_PATH_CLASSES . "WebdavClient.php");
+			// Path changed from REDCap v7 
+			if (version_compare(REDCAP_VERSION, '7.0.0', '<')) {
+			        require_once (APP_PATH_CLASSES . "WebdavClient.php");
+			} else {
+			        require_once (APP_PATH_LIBRARIES . "WebdavClient.php");
+			}
 			require (APP_PATH_WEBTOOLS . 'webdav/webdav_connection.php');
 			$wdc = new WebdavClient();
 			$wdc->set_server($webdav_hostname);
