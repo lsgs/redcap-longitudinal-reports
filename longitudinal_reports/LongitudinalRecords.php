@@ -916,7 +916,7 @@ class LongitudinalRecords
 		if (defined("EXPORT_WRITE_TO_FILE")) {
 			$record_data_tmp_file = tmpfile();
 		}
-                
+                $recordsFirstArm = array();
 		// Loop through data one record at a time
 		while ($row = db_fetch_assoc($q))
 		{
@@ -1039,6 +1039,13 @@ class LongitudinalRecords
 						}
 					}
 				}
+                            }
+                            if ($returnFormat==='html') {
+                                // store the lowest arm number for the record for use in creating report display link to record home page
+                                $armOfCurrentEvent = $Proj->eventInfo[$event_id]['arm_num'];
+                                if (!array_key_exists($record, $recordsFirstArm) || (array_key_exists($record, $recordsFirstArm) && $armOfCurrentEvent < $recordsFirstArm[$record])) {
+                                    $recordsFirstArm[$record] = $armOfCurrentEvent;
+                                }
                             }
 			}
 			// Increment row counter
@@ -1914,7 +1921,7 @@ class LongitudinalRecords
 							// If record name, then convert it to a link (unless project is archived/inactive)
 							if ($Proj->project['status'] < 2 && $this_fieldname == $Proj->table_pk) {
 								// Link URL
-								$this_arm = $Proj->firstArmNum; // ($Proj->longitudinal) ? $Proj->eventInfo[$eventsUniqueEventId[$line['redcap_event_name']]]['arm_num'] : $Proj->firstArmNum;
+								$this_arm = $recordsFirstArm[$this_value];//$Proj->firstArmNum; // ($Proj->longitudinal) ? $Proj->eventInfo[$eventsUniqueEventId[$line['redcap_event_name']]]['arm_num'] : $Proj->firstArmNum;
 								if ($longitudinal) {
                                                                         if (version_compare(REDCAP_VERSION, '7.0.0', '<')) {
         									$this_url = "grid.php?pid={$Proj->project_id}&id=".removeDDEending($this_value)."&arm=$this_arm";
