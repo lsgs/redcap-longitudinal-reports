@@ -1495,22 +1495,24 @@ class LongitudinalReports
                             return self::getReportNames($report_id, $applyUserAccess, false);
                     }
 
-                    // Remove reports if user access does not include current user
-                    $dropRpts = array();
-                    foreach ($allProjectRpts as $rId => $reportEventRecord) {
-                        foreach ($reportEventRecord as $eventId => $rptSpec) {
-                            if ($rptSpec['user_access'] === 'SELECTED') {
-                                $user_list = self::getReportAccessUsernames($rptSpec);
-                                if (!SUPER_USER && !array_key_exists($userid, $user_list)) {
-                                    $dropRpts[] = $rId;
+                    if ($applyUserAccess) {
+                        // Remove reports if user access does not include current user
+                        $dropRpts = array();
+                        foreach ($allProjectRpts as $rId => $reportEventRecord) {
+                            foreach ($reportEventRecord as $eventId => $rptSpec) {
+                                if ($rptSpec['user_access'] === 'SELECTED') {
+                                    $user_list = self::getReportAccessUsernames($rptSpec);
+                                    if (!SUPER_USER && !array_key_exists($userid, $user_list)) {
+                                        $dropRpts[] = $rId;
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if (count($dropRpts)) {
-                        foreach ($dropRpts as $dropRpt) {
-                            unset($reports[$dropRpt]);
+                        if (count($dropRpts)) {
+                            foreach ($dropRpts as $dropRpt) {
+                                unset($reports[$dropRpt]);
+                            }
                         }
                     }
                 }
@@ -2159,11 +2161,11 @@ class LongitudinalReports
 			if (isset($user_rights['data_export_tool']) && $user_rights['data_export_tool'] == '3') $data_values['removed_identifiers'] = 'Yes';
 			$data_values['fields'] = (empty($fields)) ? array_keys($Proj->metadata) : $fields;
 			// Log it
-			if (REDCap::versionCompare(REDCAP_VERSION, '7.0.0') >= 0) {
-				Logging::logEvent("","redcap_data","longitudinal_report","",json_encode($data_values),"Longitudinal Report" . ($isAPI ? " (API)" : ""));
-			} else {
-				log_event("","redcap_data","longitudinal_report","",json_encode($data_values),"Longitudinal Report" . ($isAPI ? " (API)" : ""));
-			}
+                        if (REDCap::versionCompare(REDCAP_VERSION, '7.0.0') >= 0) {
+                                Logging::logEvent("","redcap_data","longitudinal_report","",json_encode($data_values),"Longitudinal Report" . ($isAPI ? " (API)" : ""));
+                        } else {
+        			log_event("","redcap_data","longitudinal_report","",json_encode($data_values),"Longitudinal Report" . ($isAPI ? " (API)" : ""));
+                        }
 		}
 		
 		// IF OUTPUTTING A REPORT, RETURN THE CONTENT HERE
@@ -2892,12 +2894,7 @@ class LongitudinalReports
 			}	
 		} else {
 			// Store using WebDAV
-			// Path changed from REDCap v7 
-			if (version_compare(REDCAP_VERSION, '7.0.0', '<')) {
-			        require_once (APP_PATH_CLASSES . "WebdavClient.php");
-			} else {
-			        require_once (APP_PATH_LIBRARIES . "WebdavClient.php");
-			}
+			require_once (APP_PATH_LIBRARIES . "WebdavClient.php");
 			require (APP_PATH_WEBTOOLS . 'webdav/webdav_connection.php');
 			$wdc = new WebdavClient();
 			$wdc->set_server($webdav_hostname);
