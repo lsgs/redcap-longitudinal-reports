@@ -5,6 +5,11 @@
  * LS Altered for LongitudinalReport from redcap_v6.4.3/DataExport/index.php
  */
 
+/* 
+ * TODO 
+ *  - 
+ */
+ 
 // Set all parameters and include necessary files
 require_once dirname(__FILE__) . '/config.php';
 
@@ -49,7 +54,7 @@ if (isset($_GET['addedit']))
 	// Hidden dialog for error popup when field name entered is not valid
 	$html .= RCView::div(array('id'=>'VarEnteredNoExist_dialog', 'class'=>'simpleDialog'), $lang['report_builder_72']);
 	// Add the actual "create report" table's HTML at the very bottom since we're doing a direct print. So output the buffer and disable buffering.
-	ob_end_flush();
+//	ob_end_flush(); // LS remove for v11.4.4 update
 }
 /*## OTHER EXPORT OPTIONS
 elseif (isset($_GET['other_export_options']) && $user_rights['data_export_tool'] > 0)
@@ -133,7 +138,7 @@ print	RCView::div(array('style'=>'max-width:750px;margin-bottom:10px;'),
 			RCView::div(array('class'=>'clear'), '')
 		);
 // JavaScript files
-callJSfile('jquery_tablednd.js');
+callJSfile('../../'.LR_PATH_FROM_WEBROOT.'jquery_tablednd.js'); // LS 2020-09-21 this js file no longer in Rsources/js in v10.1.2
 callJSfile('../../'.LR_PATH_FROM_WEBROOT.'LongitudinalReports.js');
 // Hidden dialog to choose export format
 $html .= LongitudinalReports::renderExportOptionDialog();
