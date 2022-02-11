@@ -138,7 +138,7 @@ print	RCView::div(array('style'=>'max-width:750px;margin-bottom:10px;'),
 			RCView::div(array('class'=>'clear'), '')
 		);
 // JavaScript files
-callJSfile('../../'.LR_PATH_FROM_WEBROOT.'jquery_tablednd.js'); // LS 2020-09-21 this js file no longer in Rsources/js in v10.1.2
+callJSfile('Libraries/jquery_tablednd.js');
 callJSfile('../../'.LR_PATH_FROM_WEBROOT.'LongitudinalReports.js');
 // Hidden dialog to choose export format
 $html .= LongitudinalReports::renderExportOptionDialog();

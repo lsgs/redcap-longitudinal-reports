@@ -895,7 +895,11 @@ class LongitudinalRecords
 		}
 		//print "<br><b>MySQL Error:</b> ".db_error()."<br><b>Query:</b> $sql<br><br>";
 		// Use unbuffered query method
-		$q = db_query($sql, null, MYSQLI_USE_RESULT);
+        if (version_compare(REDCAP_VERSION, '12.0.0', '<')) {
+            $q = db_query($sql, null, MYSQLI_USE_RESULT);
+        } else {
+            $q = db_query($sql, [], null, MYSQLI_USE_RESULT);
+        }
 		// Return database query error to super users
 		if (defined('SUPER_USER') && SUPER_USER && db_error() != '') {
 			print "<br><b>MySQL Error:</b> ".db_error()."<br><b>Query:</b> $sql<br><br>";
@@ -1140,7 +1144,7 @@ class LongitudinalRecords
 		}
 
 		## ADD DATES FROM SCHEDULE IF REQURIED
-		if (isset($outputScheduleDates) && count($outputScheduleDates) > 0) {
+		if (is_array($outputScheduleDates) && count($outputScheduleDates) > 0) {
 			$sql = "select event_id, record, event_date, event_time, event_status " .
 				"from redcap_events_calendar " .
 				"where project_id = $project_id "; 
@@ -1164,7 +1168,7 @@ class LongitudinalRecords
                 
 		## ADD SURVEY IDENTIFIER AND TIMESTAMP FIELDS FOR ALL SURVEYS
 /* TODO Longitudinal Reports: include survey timestamps/urls/returncodes/survey queue links          */      
-		if ($outputSurveyFields || (isset($outputSurveyUrls) && count($outputSurveyUrls) > 0)) {
+		if ($outputSurveyFields || (is_array($outputSurveyUrls) && count($outputSurveyUrls) > 0)) {
 			$sql = "select r.record, r.first_submit_time, r.completion_time, p.participant_identifier, s.form_name, p.event_id, p.hash, r.return_code " .
 				"from redcap_surveys s, redcap_surveys_response r, redcap_surveys_participants p, redcap_events_metadata a  " .
 				"where p.participant_id = r.participant_id and s.project_id = $project_id and s.survey_id = p.survey_id " .
@@ -1419,7 +1423,7 @@ class LongitudinalRecords
                                 $headers[] = 'Survey Identifier';
                                 $headers[] = 'Survey Timestamp';							
                         }
-                        if (isset($outputScheduleDates) && count($outputScheduleDates) > 0) {
+                        if (is_array($outputScheduleDates) && count($outputScheduleDates) > 0) {
                                 foreach ($outputScheduleDates as $evt) {
                                         if ($outputCsvHeadersAsLabels) {
                                                 $headers[] = "Schedule Date ({$Proj->eventInfo[$evt]['name_ext']})";
@@ -1428,7 +1432,7 @@ class LongitudinalRecords
                                         }
                                 }
                         }
-                        if (isset($outputSurveyUrls) && count($outputSurveyUrls) > 0) {
+                        if (is_array($outputSurveyUrls) && count($outputSurveyUrls) > 0) {
                                 foreach ($outputSurveyUrls as $evtSurv) {
                                         //Event id/survey form stored as pipe-separated pair e.g. 2365|my_survey
                                         $es = explode('|', $evtSurv);
@@ -1518,13 +1522,13 @@ class LongitudinalRecords
                                                         $record_data_formatted[$recordNum]["Survey Identifier"] = "_";
                                                         $record_data_formatted[$recordNum]["Survey Timestamp"] = "_";
                                                 }
-                                                if (isset($outputScheduleDates) && count($outputScheduleDates) > 0) {
+                                                if (is_array($outputScheduleDates) && count($outputScheduleDates) > 0) {
                                                         foreach ($outputScheduleDates as $evt) {
                                                                 $colRef = "[{$Proj->getUniqueEventNames($evt)}][___schedule_date]";
                                                                 $record_data_formatted[$recordNum][$colRef] = $field_data[$colRef];
                                                         }
                                                 }
-                                                if (isset($outputSurveyUrls) && count($outputSurveyUrls) > 0) {
+                                                if (is_array($outputSurveyUrls) && count($outputSurveyUrls) > 0) {
                                                         foreach ($outputSurveyUrls as $evtSurv) {
                                                                 //Event id/survey form stored as pipe-separated pair e.g. 2365|my_survey
                                                                 $es = explode('|', $evtSurv);
