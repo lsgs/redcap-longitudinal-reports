@@ -177,11 +177,14 @@ if ($dateShiftDates) {
 }
 
 // RESPONSE
+$downloadPath = (REDCap::versionCompare(REDCAP_VERSION, '13.0.0') >= 0) 
+    ? "index.php?pid=$project_id&route=FileRepositoryController:download&id=$data_edoc_id"
+    : "FileRepository/file_download.php?pid=$project_id&id=$data_edoc_id";
 $dialog_title = 	RCView::img(array('src'=>'tick.png', 'style'=>'vertical-align:middle')) .
 					RCView::span(array('style'=>'color:green;vertical-align:middle;font-size:15px;'), $lang['data_export_tool_05']);
 $dialog_content = 	RCView::div(array('style'=>'margin-bottom:20px;'),
-						$lang['data_export_tool_183'] .
-						$citationText .
+						//$lang['data_export_tool_183'] .
+						//$citationText .
 						$dateShiftText
 					) .
 					RCView::div(array('style'=>'background-color:#F0F0F0;border:1px solid #888;padding:10px 5px;margin-bottom:10px;'),
@@ -199,7 +202,7 @@ $dialog_content = 	RCView::div(array('style'=>'margin-bottom:20px;'),
 								)
 							) .
 							// Download icons
-							RCView::tr(array(),
+                            RCView::tr(array(),
 								RCView::td(array('valign'=>'top', 'class'=>'nowrap', 'style'=>'padding:10px 0 0 20px;'),
 /*									// Syntax file download icon
 									($syntax_edoc_id == null ? '' :
@@ -209,7 +212,7 @@ $dialog_content = 	RCView::div(array('style'=>'margin-bottom:20px;'),
 									) .*/
 									RCView::SP . RCView::SP . RCView::SP .
 									// Data CSV file download icon
-									RCView::a(array('href'=>APP_PATH_WEBROOT."FileRepository/file_download.php?pid=$project_id&id=$data_edoc_id" .
+									RCView::a(array('href'=>APP_PATH_WEBROOT.$downloadPath .
 										// For R and Stata, add "exporttype" flag to remove BOM from UTF-8 encoded files because the BOM can cause data import issues into R and Stata
 										($outputFormat == 'r' ? '&exporttype=R' : ($outputFormat == 'stata' ? '&exporttype=STATA' : ''))), 
 										trim(LongitudinalReports::getDownloadIcon(($syntax_edoc_id == null ? $outputFormat : ''), $dateShiftDates))

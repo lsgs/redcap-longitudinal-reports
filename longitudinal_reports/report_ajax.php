@@ -50,7 +50,7 @@ print  	"<div id='report_div' style='margin:10px 0 20px;'>" .
 						RCView::button(array('class'=>'report_btn jqbuttonmed', 'onclick'=>"showExportFormatDialog('{$_POST['report_id']}');", 'style'=>'font-size:11px;padding:1px 4px 0px !important;'),
 							RCView::img(array('src'=>'go-down.png', 'style'=>'vertical-align:middle;')) .
 							RCView::span(array('style'=>'vertical-align:middle;'),
-								$lang['custom_reports_12']
+                                $lang['report_builder_48'] ?? $lang['custom_reports_12']
 							)
 						)
 					) .
