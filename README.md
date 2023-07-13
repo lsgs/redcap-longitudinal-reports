@@ -3,7 +3,9 @@
 
 Luke Stevens, Murdoch Childrens Research Institute https://www.mcri.edu.au
 ********************************************************************************
+## Deprecation Notice
 
+As of 13-Jul-2023 this plugin has been made obsolete with the release of the [Extended Reports](https://github.com/lsgs/redcap-extended-reports) external module.
 
 ********************************************************************************
 ## Functionality
