@@ -35,10 +35,10 @@ class LongitudinalReports
 		// Determine tabs to display
 		$tabs = array();
 		// Tab to build a new report
-		if ($user_rights['reports']) {
-			$tabs[LR_PATH_FROM_WEBROOT.'index.php?create=1&addedit=1'] =  RCView::img(array('src'=>'plus_blue.png', 'style'=>'vertical-align:middle;height:14px;width:14px;')) . 
-																RCView::span(array('style'=>'vertical-align:middle;'), $lang['report_builder_14']);
-		}
+// LS 17-Jul-2023 No more LR creation - use Extended Reports external module instead		if ($user_rights['reports']) {
+//			$tabs[LR_PATH_FROM_WEBROOT.'index.php?create=1&addedit=1'] =  RCView::img(array('src'=>'plus_blue.png', 'style'=>'vertical-align:middle;height:14px;width:14px;')) . 
+//																RCView::span(array('style'=>'vertical-align:middle;'), $lang['report_builder_14']);
+//		}
 		// Tab to view list of existing reports
 		$tabs[LR_PATH_FROM_WEBROOT.'index.php'] = RCView::img(array('src'=>'layout_down_arrow.gif', 'style'=>'vertical-align:middle;position:relative;top:1px;')) . 
 										RCView::span(array('style'=>'vertical-align:middle;'), $lang['report_builder_47']);
@@ -1663,10 +1663,12 @@ class LongitudinalReports
 		// Add last row as "add new report" button
 		if ($user_rights['reports']) {
 			$rows[$item_num] = array('', '', 
-									RCView::button(array('class'=>'jqbuttonmed', 'style'=>'margin:8px 0;', 'onclick'=>"window.location.href = app_path_webroot+'".LR_PATH_FROM_WEBROOT."index.php?create=1&addedit=1&pid='+pid;"), 
+        RCView::button(array('class'=>'jqbuttonmed', 'style'=>'margin:8px 0;', /*LS 17-Jul-2023 no new LR - use ExtRpt module 'onclick'=>"window.location.href = app_path_webroot+'".LR_PATH_FROM_WEBROOT."index.php?create=1&addedit=1&pid='+pid;"), */
+                             'disabled'=>'disabled'),
 										'+ ' . $lang['report_builder_14']
-									), '', '', '');
+									).RCView::div(array('class'=>'text-muted','style'=>'white-space:normal;'),'This "Longitudinal Reports" plugin has been superseded by the "row-per-record reshaping" functionality of the Extended Reports external module available via the regular Data Exports, Reports & Stats page.'), '', '', '');
 		}
+
 		// Set table headers and attributes
 		$viewExportOptionsWidthReduce = $viewAPIWidthAdd = 0;
 		$viewExportOptionsWidthReduce += ($user_rights['data_export_tool'] > 0) ? 0 : 80;
